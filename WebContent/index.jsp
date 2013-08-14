@@ -1,62 +1,32 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" import="java.io.*,java.util.*"%>
 
 <%
-	// 1. 获得Session创建时间, session对象在JSP中默认被构建
-	Date createTime = new Date(session.getCreationTime());
-	// 2. 获得上一次访问Session时间
-	Date lastAccessTime = new Date(session.getLastAccessedTime());
-
-	String title = "欢迎";
-	Integer visitCount = 0;
-	String visitCountKey = "visitCount";
-	String userIDKey = "userID";
-
-	// Check if this is new comer on your web page.
-	if (session.isNew()) {
-		title = "欢迎回来";
-		session.setAttribute(visitCountKey, visitCount);
+	//以下代码负责进行Session计数，思想很简单
+	//从session中获取已有的数
+	//如果有，表示是老session，就+1，然后再放回Session
+	//如果没有，表示是新session，就创建一个键值对("VK", 1),保存这个计数器
+	final String VISIT_COUNT_KEY = "VCK";
+	Integer visitCount  = (Integer) session.getAttribute(VISIT_COUNT_KEY);
+	
+	if(visitCount!=null){
+		session.setAttribute(VISIT_COUNT_KEY, visitCount+1);
+	}else{
+		session.setAttribute(VISIT_COUNT_KEY, 1);
 	}
-	visitCount = (Integer) session.getAttribute(visitCountKey);
-	visitCount = visitCount + 1;
-	session.setAttribute(visitCountKey, visitCount);
+	
 %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<!-- 基于Java基本语法的JSP网站 -->
 <html>
 <head>
-<title>Session Tracking</title>
+<title>Session 监控</title>
 </head>
 <body>
-	<h1>Session Tracking</h1>
-	<table border="1">
-		<tr>
-			<th>Session info</th>
-			<th>Value</th>
-		</tr>
-		<tr>
-			<td>id</td>
-			<td>
-				<%=session.getId()%>
-			</td>
-		</tr>
-		<tr>
-			<td>Creation Time</td>
-			<td>
-				<%=createTime%>
-			</td>
-		</tr>
-		<tr>
-			<td>Time of Last Access</td>
-			<td>
-				<%=lastAccessTime%>
-			</td>
-		</tr>
-		<tr>
-			<td>Number of visits</td>
-			<td>
-				<%=visitCount%>
-			</td>
-		</tr>
-	</table>
+	<h1>Session 监控</h1>
+	<ul>
+		<li>Session ID: <%=session.getId() %>
+		<li>Session 创建时间: <%=new Date(session.getCreationTime()) %>
+		<li>Session 上次访问时间: <%=new Date(session.getLastAccessedTime()) %>
+		<li>Session 访问次数: <%=session.getAttribute(VISIT_COUNT_KEY) %>
+	</ul>
 </body>
 </html>
