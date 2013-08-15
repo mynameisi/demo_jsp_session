@@ -4,7 +4,7 @@
 <%@page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%><!-- 这个引入，是为了使用JSTL(Java Standard Tag Library) -->
 <%
-	Logger logger = LoggerFactory.getLogger(this.getClass());//this is for server level logger
+	Logger logger = LoggerFactory.getLogger(this.getClass());//这句话的作用是在JSP中加入Logger，已实现必要的Debuging
 %>
 
 <!DOCTYPE HTML">
@@ -30,7 +30,7 @@
 	<hr>
 	<fieldset>
 		<legend>JSTL实现的Session访问次数统计</legend>
-		<c:set var="PC" scope="session" value="${sessionScope.PC==null?1:sessionScope.PC+1}" />
+		<c:set var="PC" scope="session" value="${sessionScope.PC==null?1:sessionScope.PC+1}" /><!-- 等价的JSTL代码 -->
 		<c:out value="${sessionScope.PC}" />
 		<%
 			logger.debug("基于JSTL的Session变量 PC 现在的值是: " + session.getAttribute("PC"));
