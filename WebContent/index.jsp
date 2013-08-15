@@ -1,6 +1,7 @@
+<%@page import="org.slf4j.Logger"%>
 <%@page import="java.util.Date"%><!-- 用ctrl+space就可以直接在JSP文件中导入类 -->
 <%@page import="org.slf4j.LoggerFactory"%>
-<%@page import="org.slf4j.Logger"%>
+
 <%@page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%><!-- 这个引入，是为了使用JSTL(Java Standard Tag Library) -->
 <%
